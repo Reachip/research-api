@@ -31,7 +31,7 @@ class UserRegister(Resource):
 
         if not query.exists():
             Users.create(username=args["username"], mail=args["mail"], password=args["password"])
-            return Response(status=200)
+            return Response('{"message": "Succesfully registered"}', status=200)
 
         return Response('{"message": "email already taken"}', status=401)
 

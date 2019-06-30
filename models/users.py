@@ -8,7 +8,4 @@ class Users(Model):
     role = CharField(default="public")
 
     class Meta:
-        database = db 
-        
-
-
+        database = db

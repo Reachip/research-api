@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 import jwt
 
 from flask_restful import Resource, reqparse, Api
@@ -12,6 +13,13 @@ from resources.navigation.reports import NavigationReports as NavigationReportsR
 app = Flask(__name__)
 db.connect()
 db.create_tables([Users, NavigationReportModel])
+
+@app.after_request
+def after_request(response):
+    response.headers['Access-Control-Allow-Origin'] = "*"
+    response.headers['Access-Control-Allow-Methods'] = "POST, GET, OPTIONS, PUT, DELETE, PATCH"
+    response.headers['Access-Control-Allow-Headers'] = "origin, content-type, accept, x-requested-with"
+    return response
 
 api = Api(app=app, prefix="/api")
 api.add_resource(UserAuth, "/auth")
