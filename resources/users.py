@@ -2,8 +2,8 @@ from flask_restful import Resource, reqparse
 from flask import Response
 import jwt 
 
-from models.users import Users
-from utils.jwt import get_jwt
+from ..models.users import Users
+from ..utils.jwt import get_jwt
 
 class UserAuth(Resource):
     def post(self):
@@ -16,8 +16,18 @@ class UserAuth(Resource):
         
         if query.exists():
             payload = {"username": args["username"], "role": query[0].role}
-            token = get_jwt(payload)
+            
+            try:
+                token = get_jwt(payload)
+                
+            except:
+                return Response('{"message": "Internal server error concerning the generation of a token"}', 500)
+            
             return {"access_token": token}
+        else:
+            return Response('{"message": "password or username invalid"}', 401)
+        
+        
 
 class UserRegister(Resource):
     def post(self):

@@ -1,13 +1,14 @@
 import datetime
-from peewee import Model, CharField, IntegerField, DecimalField
+from peewee import Model, CharField, IntegerField, PrimaryKeyField
 from .. import db 
 
 class NavigationReports(Model):
-    timestamp = CharField(default=str(datetime.datetime.now))
-    PH = IntegerField()
+    id = PrimaryKeyField()
+    timestamp = CharField(default=datetime.datetime.now())
+    ph = IntegerField()
     temperature = IntegerField()
-    longitude = DecimalField()
-    latitude = DecimalField()
+    longitude = CharField()
+    latitude = CharField()
     
     class Meta:
         database = db 
